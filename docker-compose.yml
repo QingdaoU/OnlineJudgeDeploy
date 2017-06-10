@@ -1,0 +1,45 @@
+version: "2"
+services:
+    oj_redis:
+        image: redis:3.0-alpine
+        restart: always
+        volumes:
+            - $PWD/data/redis:/data
+
+    oj_mysql:
+        image: registry.cn-hangzhou.aliyuncs.com/qduoj/mysql
+        restart: always
+        volumes:
+            - $PWD/data/mysql:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD={YOUR_PASSWORD}
+
+    judger:
+        image: registry.cn-hangzhou.aliyuncs.com/qduoj/judger
+        restart: always
+        volumes:
+            - $PWD/data/test_case:/var/judger/test_case
+            - $PWD/data/log:/var/judger/code/judge/log
+        environment:
+            - TZ=Asia/Shanghai
+            - rpc_token={YOUR_PASSWORD}
+        ports:
+            - "9000:8080"
+    oj_web_server:
+        image: registry.cn-hangzhou.aliyuncs.com/qduoj/oj_web_server
+        restart: always
+        links:
+            - oj_mysql
+            - oj_redis
+            - judger
+        volumes:
+            - $PWD/data/test_case:/code/test_case
+            - $PWD/data/upload:/code/upload
+            - $PWD/data/log:/code/log
+        environment:
+            - TZ=Asia/Shanghai
+            - oj_env=server
+            - MYSQL_ENV_MYSQL_USER=root
+            - MYSQL_ENV_MYSQL_ROOT_PASSWORD={YOUR_PASSWORD}
+        ports:
+            - "0.0.0.0:80:8001"
