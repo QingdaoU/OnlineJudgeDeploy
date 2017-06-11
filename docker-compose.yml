@@ -2,20 +2,23 @@ version: "2"
 services:
     oj_redis:
         image: redis:3.0-alpine
+        container_name: oj_redis
         restart: always
         volumes:
             - $PWD/data/redis:/data
 
     oj_mysql:
         image: registry.cn-hangzhou.aliyuncs.com/qduoj/mysql
+        container_name: oj_mysql
         restart: always
         volumes:
             - $PWD/data/mysql:/var/lib/mysql
         environment:
-            - MYSQL_ROOT_PASSWORD={YOUR_PASSWORD}
+            - MYSQL_ROOT_PASSWORD=MYSQL_PASSWORD_AAA
 
     judger:
         image: registry.cn-hangzhou.aliyuncs.com/qduoj/judger
+        container_name: judger
         restart: always
         volumes:
             - $PWD/data/test_case:/var/judger/test_case
@@ -23,10 +26,10 @@ services:
         environment:
             - TZ=Asia/Shanghai
             - rpc_token={YOUR_PASSWORD}
-        ports:
-            - "9000:8080"
+
     oj_web_server:
         image: registry.cn-hangzhou.aliyuncs.com/qduoj/oj_web_server
+        container_name: oj_web_server
         restart: always
         links:
             - oj_mysql
@@ -36,10 +39,13 @@ services:
             - $PWD/data/test_case:/code/test_case
             - $PWD/data/upload:/code/upload
             - $PWD/data/log:/code/log
+            - $PWD/data/ssl:/code/ssl
+            - $PWD/custom_settings.py:/code/oj/custom_settings.py
         environment:
             - TZ=Asia/Shanghai
             - oj_env=server
             - MYSQL_ENV_MYSQL_USER=root
-            - MYSQL_ENV_MYSQL_ROOT_PASSWORD={YOUR_PASSWORD}
+            - MYSQL_ENV_MYSQL_ROOT_PASSWORD=MYSQL_PASSWORD_AAA
         ports:
-            - "0.0.0.0:80:8001"
+            - "0.0.0.0:80:80"
+            - "0.0.0.0:443:443"
