@@ -1,6 +1,7 @@
 # coding=utf-8
 import os
 
+# Run `docker-compose restart` after changing this file
 
 WEBSITE_INFO = {"website_name": u"example1大学 OnlineJudge",
                 "website_name_shortcut": u"example oj",
