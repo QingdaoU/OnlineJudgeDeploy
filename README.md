@@ -18,6 +18,8 @@
 
 运行 `docker-compose up -d` ，不需要其他的步骤，大约一分钟之后 web 界面就可以访问了，默认开放80和443端口。其中443端口是自签名证书。
 
+注意，对于非root用户，请用 `sudo -E docker-compose up -d`，否则不会传递当前的 `$PWD` 环境变量。
+
 ## 这就结束了
 
 超级管理员用户名是root，默认密码是`password@root`，请及时修改。
