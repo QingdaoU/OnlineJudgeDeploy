@@ -10,8 +10,8 @@
 
 Windows下面安装会有很多坑，本人使用Win10的`PowerShell`测试成功
 
-- 安装Windows的docker工具
-- 右击右下角docker图标，选择Settings进行设置
+- 安装Win的Docker工具
+- 右击右下角Docker图标，选择Settings进行设置
 - 选择`Shared Drives`菜单，之后勾选你想安装OJ的盘符位置（例如我勾选了D盘），点击Apply
 - 输入Windows的账号密码进行文件共享
 - 设置`PWD`(大小写没试过，我是大写的)的环境变量为你想安装的目录，注意！目录必须在你共享的盘符中（例如我设置的是`D:\qdoj`）
