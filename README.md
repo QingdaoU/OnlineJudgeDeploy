@@ -4,7 +4,7 @@
 
  - 必要的工具 `apt-get update && apt-get install -y vim python-pip curl git`
  - 安装 docker `curl -sSL https://get.daocloud.io/docker | sh`
- - 安装 docker-compose `LC_CTYPE= pip install docker-compose`
+ - 安装 docker-compose `pip install docker-compose`
 
 ## Windows 系统安装基础环境
 
@@ -23,20 +23,27 @@ Windows 下面安装会有很多坑，经过测试时，Win10 x64下的 `PowerSh
 
 请选择磁盘空间富余的位置，运行下面的命令
 
-`git clone https://github.com/QingdaoU/OnlineJudgeDeploy.git && cd OnlineJudgeDeploy`
+```sh
+git clone https://github.com/QingdaoU/OnlineJudgeFE.git
+git clone -b 2.0 https://github.com/QingdaoU/OnlineJudge.git
+git clone -b 2.0 https://github.com/QingdaoU/OnlineJudgeDeploy.git
+cd OnlineJudgeDeploy
+```
 
-然后编辑 `docker-compose.yml` 第28行为自定义的密码，比如`rpc_token=123456`
+然后编辑 `docker-compose.yml` 将41行的`JUDGE_SERVER_TOKEN`和第68行的`TOKEN`修改为自定义的值， 两处值必须相同且`=`前后不能有空格
 
 ## 启动服务
 
-运行 `docker-compose up -d` ，不需要其他的步骤，大约一分钟之后 web 界面就可以访问了，默认开放80和443端口。其中443端口是自签名证书。
+运行 `docker-compose up -d` 根据网速情况，大约5到30分钟就可以自动搭建完成，全程无需人工干预。
+若想获悉安装进度，运行`docker-compose logs`查看安装日志，当显示结果中出现以下文字时
+```
+Congratulations, All have done without error.
+```
+表示安装已成功结束
 
 注意，对于非root用户，请用 `sudo -E docker-compose up -d`，否则不会传递当前的 `$PWD` 环境变量。
 
-## 这就结束了
+## 尽情享用吧
 
-超级管理员用户名是root，默认密码是`password@root`，请及时修改。
-
-登录`/admin`，添加一个判题服务器，地址为`judger`，端口为`8080`，密码是上面自定义的`rpc_token`。
-
-修改`custom_settings.py`可以自定义站点信息。
+通过浏览器访问服务器的80端口，就可以开始使用了
+后台管理默认路径为`/admin`, 安装过程中自动添加的超级管理员用户名为`root`，密码为`rootroot`， 请务必及时修改。
