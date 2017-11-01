@@ -21,13 +21,14 @@ Windows 下面安装会有很多坑，经过测试时，Win10 x64下的 `PowerSh
 
 ## 准备安装文件
 
-请选择磁盘空间富余的位置，运行下面的命令
+请选择磁盘空间富余的位置，依次运行下面的命令
 
 ```sh
-git clone https://github.com/QingdaoU/OnlineJudgeFE.git
-git clone -b 2.0 https://github.com/QingdaoU/OnlineJudge.git
 git clone -b 2.0 https://github.com/QingdaoU/OnlineJudgeDeploy.git
 cd OnlineJudgeDeploy
+git clone https://github.com/QingdaoU/JudgeServer.git
+git clone https://github.com/QingdaoU/OnlineJudgeFE.git
+git clone -b 2.0 https://github.com/QingdaoU/OnlineJudge.git
 ```
 
 然后编辑 `docker-compose.yml` 将41行的`JUDGE_SERVER_TOKEN`和第68行的`TOKEN`修改为自定义的值， 两处值必须相同且`=`前后不能有空格
@@ -35,15 +36,24 @@ cd OnlineJudgeDeploy
 ## 启动服务
 
 运行 `docker-compose up -d` 根据网速情况，大约5到30分钟就可以自动搭建完成，全程无需人工干预。
-若想获悉安装进度，运行`docker-compose logs`查看安装日志，当显示结果中出现以下文字时
-```
-Congratulations, All have done without error.
-```
-表示安装已成功结束
 
-注意，对于非root用户，请用 `sudo -E docker-compose up -d`，否则不会传递当前的 `$PWD` 环境变量。
+> 对于非root用户，请用 `sudo -E docker-compose up -d`，否则不会传递当前的 `$PWD` 环境变量。
+
+若想获悉安装进度，运行`docker-compose logs`查看安装日志，当显示结果中出现以下文字时表示安装已成功结束。
+```
+Congratulations, All have done without errors.
+```
+
 
 ## 尽情享用吧
 
-通过浏览器访问服务器的80端口，就可以开始使用了
+通过浏览器访问服务器的80端口，就可以开始使用了。
 后台管理默认路径为`/admin`, 安装过程中自动添加的超级管理员用户名为`root`，密码为`rootroot`， 请务必及时修改。
+
+值得一提的是
+
++ 当前目录中的`data`目录为OJ的数据存储目录，包括数据库、测试用例、头像上传目录等，您可以定期对其做数据备份。
++ 当前目录中的`log`目录为OJ的日志存储目录，您可以在发现问题时查看日志获取详情。
+
+## 定制
+2.0版将一些常用设置放到了后台管理中，您可以直接登录管理后台对系统进行基本配置，而无需进行代码改动。
