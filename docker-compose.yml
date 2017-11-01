@@ -30,6 +30,7 @@ services:
       - $PWD/log:/data/log
       - $PWD/data/test_case:/data/test_case
       - $PWD/data/avatar:/data/avatar
+      - $PWD/data/upload:/data/upload
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -75,6 +76,7 @@ services:
     volumes:
       - $PWD/OnlineJudgeFE:/OJ_FE
       - $PWD/data/avatar:/data/avatar
+      - $PWD/data/upload:/data/upload
       - $PWD/log:/var/log/nginx
     ports:
      - "0.0.0.0:80:80"
