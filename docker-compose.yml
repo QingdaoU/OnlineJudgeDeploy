@@ -1,7 +1,7 @@
 version: "2"
 services:
     oj_redis:
-        image: redis:3.0-alpine
+        image: registry.cn-hangzhou.aliyuncs.com/qduoj/redis:3.0-alpine
         container_name: oj_redis
         restart: always
         volumes:
