@@ -1,16 +1,16 @@
 version: "3"
 services:
 
-  redis:
-    image: redis:4.0-alpine
-    container_name: oj_redis
+  oj-redis:
+    image: registry.docker-cn.com/library/redis:4.0-alpine
+    container_name: oj-redis
     restart: always
     volumes:
       - $PWD/data/redis:/data
   
-  postgres:
-    image: postgres:10-alpine
-    container_name: oj_postgres
+  oj-postgres:
+    image: registry.docker-cn.com/library/postgres:10-alpine
+    container_name: oj-postgres
     restart: always
     volumes:
       - $PWD/data/postgres:/var/lib/postgresql/data
@@ -18,35 +18,11 @@ services:
       - POSTGRES_DB=onlinejudge
       - POSTGRES_USER=onlinejudge
       - POSTGRES_PASSWORD=onlinejudge
-  
-  oj-backend:
-    image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/oj_backend
-    container_name: oj_backend
-    depends_on:
-      - redis
-      - postgres
-    volumes:
-      - $PWD/OnlineJudge:/app
-      - $PWD/log:/data/log
-      - $PWD/data/test_case:/data/test_case
-      - $PWD/data/avatar:/data/avatar
-      - $PWD/data/upload:/data/upload
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - POSTGRES_HOST=postgres
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=onlinejudge
-      - POSTGRES_USER=onlinejudge
-      - POSTGRES_PASSWORD=onlinejudge
-      - JUDGE_SERVER_TOKEN=CHANGE_THIS
 
   judge-server:
     image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
-    container_name: judge_server
+    container_name: judge-server
     read_only: true
-    depends_on:
-      - oj-backend
     cap_drop:
       - SETPCAP
       - MKNOD
@@ -59,24 +35,28 @@ services:
       - /judger_run:exec,mode=777
       - /spj:exec,mode=777
     volumes:
-      - $PWD/data/test_case:/test_case:ro
-      - $PWD/log:/log
+      - $PWD/data/backend/test_case:/test_case:ro
+      - $PWD/data/judge_server:/log
       - $PWD/JudgeServer/server:/code:ro
     environment:
       - service_url=http://judge-server:8080
-      - OJ_WEB_SERVER_PORT_8080_TCP_ADDR=oj-backend
-      - OJ_WEB_SERVER_PORT_8080_TCP_PORT=8080
+      - service_discovery_url=http://oj-backend:8000/api/judge_server_heartbeat/
       - TOKEN=CHANGE_THIS
-        
-  oj-frontend:
-    image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/oj_frontend
-    container_name: oj_frontend
+  
+  oj-backend:
+    image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/oj_backend
+    container_name: oj-backend
     depends_on:
-      - oj-backend
+      - oj-redis
+      - oj-postgres
+      - judge-server
     volumes:
-      - $PWD/OnlineJudgeFE:/OJ_FE
-      - $PWD/data/avatar:/data/avatar
-      - $PWD/data/upload:/data/upload
-      - $PWD/log:/var/log/nginx
+      - $PWD/data/backend:/data
+    environment:
+      - POSTGRES_DB=onlinejudge
+      - POSTGRES_USER=onlinejudge
+      - POSTGRES_PASSWORD=onlinejudge
+      - JUDGE_SERVER_TOKEN=CHANGE_THIS
     ports:
-     - "0.0.0.0:80:80"
+      - "0.0.0.0:80:8000"
+      - "0.0.0.0:443:1443"
