@@ -37,7 +37,6 @@ services:
     volumes:
       - $PWD/data/backend/test_case:/test_case:ro
       - $PWD/data/judge_server:/log
-      - $PWD/JudgeServer/server:/code:ro
     environment:
       - service_url=http://judge-server:8080
       - service_discovery_url=http://oj-backend:8000/api/judge_server_heartbeat/
