@@ -57,6 +57,7 @@ services:
       - POSTGRES_PASSWORD=onlinejudge
       - JUDGE_SERVER_TOKEN=CHANGE_THIS
       # - FORCE_HTTPS=1
+      # - STATIC_CDN_HOST=cdn.oj.com
     ports:
       - "0.0.0.0:80:8000"
       - "0.0.0.0:443:1443"
