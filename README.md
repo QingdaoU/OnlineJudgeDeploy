@@ -36,15 +36,17 @@ git clone -b 2.0 https://github.com/QingdaoU/OnlineJudgeDeploy.git && cd OnlineJ
 docker-compose up -d
 ```
 
+> 对于非root用户，请用 `sudo -E docker-compose up -d`，否则不会传递当前的 `$PWD` 环境变量。
+
 根据网速情况，大约5到30分钟就可以自动搭建完成，全程无需人工干预。
 
-> 对于非root用户，请用 `sudo -E docker-compose up -d`，否则不会传递当前的 `$PWD` 环境变量。
+等命令执行完成，然后运行 `docker ps -a`，看到所有的容器的状态没有 `unhealthy` 或 `Exited (x) xxx` 就代表容器启动成功。然后 `docker logs -f oj-backend` 直到看到 `XX entered RUNNING state, process has stayed up for > than 5 seconds (startsecs)` 就可以 `ctrl + c` 结束掉了，代表已经安装成功。
 
 ## 尽情享用吧
 
-通过浏览器访问服务器的80端口，就可以开始使用了。后台管理路径为`/admin`, 安装过程中自动添加的超级管理员用户名为`root`，密码为`rootroot`， **请务必及时修改密码**。
+通过浏览器访问服务器的 HTTP 80 端口或者 HTTPS 443 端口，就可以开始使用了。后台管理路径为`/admin`, 安装过程中自动添加的超级管理员用户名为`root`，密码为`rootroot`， **请务必及时修改密码**。
 
-值得一提的是当前目录中的 `data` 目录为OJ的数据存储目录，包括数据库、测试用例、头像上传目录等，请注意数据安全。
+当前目录中的 `data` 目录为OJ的数据存储目录，包括数据库、测试用例、头像上传目录等，请注意数据安全。
 
 ## 定制
 
