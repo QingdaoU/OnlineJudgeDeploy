@@ -3,12 +3,14 @@
 以下命令都需要 root 用户身份运行，请自行添加 `sudo`
 
 - 必要的工具 `apt-get update && apt-get install -y vim python-pip curl git`
-- 安装 Docker `curl -sSL https://get.daocloud.io/docker | sh`
+- 安装 Docker `curl -sSL https://get.daocloud.io/docker | sh` （这一步可能比较慢，请耐心等待，官方的安装指南见 https://docs.docker.com/engine/installation/）
 - 安装 docker-compose `pip install docker-compose`
 
 ## Windows 系统安装基础环境
 
-Windows 下面安装会有很多坑，经过测试时，Win10 x64下的 `PowerShell` 可以正常使用。
+Windows 下仅用临时的测试，不要在生产环境使用 Docker for Windows。
+
+以下教程仅适用于 Win10 x64 下的 `PowerShell`
 
 - 安装 Windows 的 Docker 工具
 - 右击右下角 Docker 图标，选择 Settings 进行设置
@@ -26,8 +28,6 @@ Windows 下面安装会有很多坑，经过测试时，Win10 x64下的 `PowerSh
 git clone -b 2.0 https://github.com/QingdaoU/OnlineJudgeDeploy.git && cd OnlineJudgeDeploy
 ```
 
-然后编辑 `docker-compose.yml` 将43行的`TOKEN`和第58行的`JUDGE_SERVER_TOKEN`修改为自定义的值， 两处值必须相同且 `=` 前后不能有空格
-
 ## 启动服务
 
 ```bash
@@ -42,7 +42,7 @@ docker-compose up -d
 
 通过浏览器访问服务器的80端口，就可以开始使用了。后台管理路径为`/admin`, 安装过程中自动添加的超级管理员用户名为`root`，密码为`rootroot`， **请务必及时修改密码**。
 
-值得一提的是当前目录中的`data`目录为OJ的数据存储目录，包括数据库、测试用例、头像上传目录等，您可以定期对其做数据备份,其中`./data/log`目录存储了所有模块的日志文件，当有错误发生时您可以查看日志或许详细信息
+值得一提的是当前目录中的 `data` 目录为OJ的数据存储目录，包括数据库、测试用例、头像上传目录等，您可以定期对其做数据备份,其中 `./data/log` 目录存储了所有模块的日志文件，当有错误发生时您可以查看日志或许详细信息
 
 ## 定制
 
@@ -52,4 +52,4 @@ docker-compose up -d
 
 ## 其他问题
 
-请参照: [http://docs.onlinejudge.me/](http://docs.onlinejudge.me/)， 如有其他问题请入群讨论或提issue
+请参照: [http://docs.onlinejudge.me/](http://docs.onlinejudge.me/#/onlinejudge/faq) ，如有其他问题请入群讨论或提issue
