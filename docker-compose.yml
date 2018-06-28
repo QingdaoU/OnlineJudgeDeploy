@@ -2,14 +2,14 @@ version: "3"
 services:
 
   oj-redis:
-    image: registry.docker-cn.com/library/redis:4.0-alpine
+    image: docker.mirrors.ustc.edu.cn/library/redis:4.0-alpine
     container_name: oj-redis
     restart: always
     volumes:
       - $PWD/data/redis:/data
   
   oj-postgres:
-    image: registry.docker-cn.com/library/postgres:10-alpine
+    image: docker.mirrors.ustc.edu.cn/library/postgres:10-alpine
     container_name: oj-postgres
     restart: always
     volumes:
