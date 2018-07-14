@@ -1,6 +1,6 @@
 ## 环境准备
 
-### Linux 环境
+### Linux 环境
 
 1. 安装必要的依赖
 
@@ -10,15 +10,15 @@
     pip install docker-compose
     ```
 1. 安装 Docker  
-    国内用户使用脚本一键安装: `sudo curl -sSL https://get.daocloud.io/docker | sh`  
-    国外用户使用脚本一键安装: `sudo curl -sSL get.docker.com | sh`
+    国内用户使用脚本一键安装: `sudo curl -sSL https://get.daocloud.io/docker | sh`  
+    国外用户使用脚本一键安装: `sudo curl -sSL get.docker.com | sh`
 
     详细步骤参照： [https://docs.docker.com/install/]()
 
 ### Windows 环境
 
 
->window下的安装进攻体验，勿在生产环境使用。如有必要，请使用虚拟机安装Linux并将OJ安装在其中。
+>window下的安装进攻体验，勿在生产环境使用。如有必要，请使用虚拟机安装Linux并将OJ安装在其中。
 
 
 以下教程仅适用于 Win10 x64 下的 `PowerShell`
@@ -28,7 +28,7 @@
 1. 选择 `Shared Drives` 菜单，之后勾选你想安装 OJ 的盘符位置（例如勾选D盘），点击 `Apply`
 1. 输入 Windows 的账号密码进行文件共享
 1. 启动 `PowerShell`，输入`$env:PWD='{your path}'`， `{your path}`代表你想安装的目录。注意！目录必须在你共享的盘符中（例如设置`D:\qduoj`）。由于你创建的是临时环境变量，`PowerShell`关闭则临时变量作废，因此每次启动前必须重新设置过。当然你也可以选择在Win的环境变量中永久添加名为`PWD`的环境变量（与JDK设置方法相同）
-1. 安装 `Python`、`pip`、`git`、`docker-compose`，安装方法自行搜索
+1. 安装 `Python`、`pip`、`git`、`docker-compose`，安装方法自行搜索
 
 ## 开始安装
 
@@ -37,7 +37,7 @@
     ```bash
     git clone -b 2.0 https://github.com/QingdaoU/OnlineJudgeDeploy.git && cd OnlineJudgeDeploy
     ```
-1. 设置Docker加速源（可选，国内用户推荐）
+1. 设置 Docker 加速源（可选，国内用户推荐）
 
     参照： [https://lug.ustc.edu.cn/wiki/mirrors/help/docker]()
 
