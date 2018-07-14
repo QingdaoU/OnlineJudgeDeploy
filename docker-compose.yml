@@ -2,14 +2,14 @@ version: "3"
 services:
 
   oj-redis:
-    image: redis:4.0-alpine
+    image: docker.mirrors.ustc.edu.cn/library/redis:4.0-alpine
     container_name: oj-redis
     restart: always
     volumes:
       - $PWD/data/redis:/data
   
   oj-postgres:
-    image: postgres:10-alpine
+    image: docker.mirrors.ustc.edu.cn/library/postgres:10-alpine
     container_name: oj-postgres
     restart: always
     volumes:
@@ -20,7 +20,7 @@ services:
       - POSTGRES_PASSWORD=onlinejudge
 
   judge-server:
-    image: qingdaou/judge_server
+    image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
     container_name: judge-server
     restart: always
     read_only: true
@@ -43,7 +43,7 @@ services:
       - TOKEN=CHANGE_THIS
   
   oj-backend:
-    image: qingdaou/onlinejudge
+    image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/oj_backend
     container_name: oj-backend
     restart: always
     depends_on:
