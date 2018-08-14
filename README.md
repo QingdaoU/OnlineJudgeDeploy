@@ -14,7 +14,7 @@
     国内用户使用脚本一键安装: `sudo curl -sSL https://get.daocloud.io/docker | sh`  
     国外用户使用脚本一键安装: `sudo curl -sSL get.docker.com | sh`
     
-    详细步骤参照： [https://docs.docker.com/install/]()
+    详细步骤参照： [https://docs.docker.com/install/](https://docs.docker.com/install/)
 
 ### Windows 环境
 
