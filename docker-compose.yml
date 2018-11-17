@@ -41,6 +41,7 @@ services:
       - SERVICE_URL=http://judge-server:8080
       - BACKEND_URL=http://oj-backend:8000/api/judge_server_heartbeat/
       - TOKEN=CHANGE_THIS
+      # - judger_debug=1
   
   oj-backend:
     image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/oj_backend
