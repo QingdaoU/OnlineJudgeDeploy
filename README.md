@@ -27,8 +27,7 @@ Windows 下的安装仅供体验，勿在生产环境使用。如有必要，请
 2. 右击右下角 Docker 图标，选择 Settings 进行设置
 3. 选择 `Shared Drives` 菜单，之后勾选你想安装 OJ 的盘符位置（例如勾选D盘），点击 `Apply`
 4. 输入 Windows 的账号密码进行文件共享
-5. 启动 `PowerShell`，输入`$env:PWD='{your path}'`， `{your path}`代表你想安装的目录。注意！目录必须在你共享的盘符中（例如设置`D:\qduoj`）。由于你创建的是临时环境变量，`PowerShell`关闭则临时变量作废，因此每次启动前必须重新设置过。当然你也可以选择在Win的环境变量中永久添加名为`PWD`的环境变量（与JDK设置方法相同）。
-6. 安装 `Python`、`pip`、`git`、`docker-compose`，安装方法自行搜索。
+5. 安装 `Python`、`pip`、`git`、`docker-compose`，安装方法自行搜索。
 
 ## 开始安装
 
@@ -43,8 +42,6 @@ Windows 下的安装仅供体验，勿在生产环境使用。如有必要，请
     ```bash
     docker-compose up -d
     ```
-
-    > 对于非root用户，请用 `sudo -E docker-compose up -d`，否则不会传递当前的 `$PWD` 环境变量。
 
 根据网速情况，大约5到30分钟就可以自动搭建完成，全程无需人工干预。
 

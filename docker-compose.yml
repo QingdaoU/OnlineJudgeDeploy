@@ -6,14 +6,14 @@ services:
     container_name: oj-redis
     restart: always
     volumes:
-      - $PWD/data/redis:/data
+      - ./data/redis:/data
   
   oj-postgres:
     image: postgres:10-alpine
     container_name: oj-postgres
     restart: always
     volumes:
-      - $PWD/data/postgres:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=onlinejudge
       - POSTGRES_USER=onlinejudge
@@ -34,9 +34,9 @@ services:
     tmpfs:
       - /tmp
     volumes:
-      - $PWD/data/backend/test_case:/test_case:ro
-      - $PWD/data/judge_server/log:/log
-      - $PWD/data/judge_server/run:/judger
+      - ./data/backend/test_case:/test_case:ro
+      - ./data/judge_server/log:/log
+      - ./data/judge_server/run:/judger
     environment:
       - SERVICE_URL=http://judge-server:8080
       - BACKEND_URL=http://oj-backend:8000/api/judge_server_heartbeat/
@@ -52,7 +52,7 @@ services:
       - oj-postgres
       - judge-server
     volumes:
-      - $PWD/data/backend:/data
+      - ./data/backend:/data
     environment:
       - POSTGRES_DB=onlinejudge
       - POSTGRES_USER=onlinejudge
