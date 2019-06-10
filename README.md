@@ -1,42 +1,64 @@
-## Linux 系统安装基础环境
+## 环境准备
 
-以下命令都需要 root 用户身份运行，请自行添加 `sudo`
+### Linux 环境
 
- - 必要的工具 `apt-get update && apt-get install -y vim python-pip curl git`
- - 安装 docker `curl -sSL https://get.daocloud.io/docker | sh`
- - 安装 docker-compose `LC_CTYPE= pip install docker-compose`
+1. 安装必要的依赖
 
-## Windows 系统安装基础环境
+    ```bash
+    sudo apt-get update && sudo apt-get install -y vim python-pip curl git
+    pip install docker-compose
+    ```
 
-Windows 下面安装会有很多坑，经过测试时，Win10 x64下的 `PowerShell` 可以正常使用。
+2. 安装 Docker 
 
-- 安装 Windows 的 Docker 工具
-- 右击右下角 Docker 图标，选择 Settings 进行设置
-- 选择 `Shared Drives` 菜单，之后勾选你想安装 OJ 的盘符位置（例如勾选D盘），点击 `Apply`
-- 输入 Windows 的账号密码进行文件共享
-- 启动 `PowerShell`，输入`$env:PWD='{your path}'，{you path}`代表你想安装的目录。注意！目录必须在你共享的盘符中（例如设置`D:\qduoj`）。由于你创建的是临时环境变量，`PowerShell`关闭则临时变量作废，因此每次启动前必须重新设置过。当然你也可以选择在Win的环境变量中永久添加名为`PWD`的环境变量（与JDK设置方法相同）
+    国内用户使用脚本一键安装: `sudo curl -sSL https://get.daocloud.io/docker | sh`  
+    国外用户使用脚本一键安装: `sudo curl -sSL get.docker.com | sh`
+    
+    详细步骤参照： [https://docs.docker.com/install/](https://docs.docker.com/install/)
 
-### 注意
- - 因为 Docker 使用了很多 Linux 的特性，所以 Windows上面运行 Docker 实际上通过 `Hyper-V` 新建了一个 Linux 虚拟机，然后在虚拟机里面运行Docker。因此目录的挂载需要进行文件共享设置。`docker-compose.yml` 里面 `volumes` 挂载目录写的是 `$PWD`，这个在 Linux 里面代表当前目录，而 Windows 中默认不存在。
+### Windows 环境
 
-## 准备安装文件
 
-请选择磁盘空间富余的位置，运行下面的命令
+Windows 下的安装仅供体验，勿在生产环境使用。如有必要，请使用虚拟机安装 Linux 并将 OJ 安装在其中。
 
-`git clone https://github.com/QingdaoU/OnlineJudgeDeploy.git && cd OnlineJudgeDeploy`
+以下教程仅适用于 Win10 x64 下的 `PowerShell`
 
-然后编辑 `docker-compose.yml` 第28行为自定义的密码，比如`rpc_token=123456`
+1. 安装 Windows 的 Docker 工具
+2. 右击右下角 Docker 图标，选择 Settings 进行设置
+3. 选择 `Shared Drives` 菜单，之后勾选你想安装 OJ 的盘符位置（例如勾选D盘），点击 `Apply`
+4. 输入 Windows 的账号密码进行文件共享
+5. 安装 `Python`、`pip`、`git`、`docker-compose`，安装方法自行搜索。
 
-## 启动服务
+## 开始安装
 
-运行 `docker-compose up -d` ，不需要其他的步骤，大约一分钟之后 web 界面就可以访问了，默认开放80和443端口。其中443端口是自签名证书。
+1. 请选择磁盘空间富余的位置，运行下面的命令
 
-注意，对于非root用户，请用 `sudo -E docker-compose up -d`，否则不会传递当前的 `$PWD` 环境变量。
+    ```bash
+    git clone -b 2.0 https://github.com/QingdaoU/OnlineJudgeDeploy.git && cd OnlineJudgeDeploy
+    ```
 
-## 这就结束了
+2. 启动服务
 
-超级管理员用户名是root，默认密码是`password@root`，请及时修改。
+    ```bash
+    docker-compose up -d
+    ```
 
-登录`/admin`，添加一个判题服务器，地址为`judger`，端口为`8080`，密码是上面自定义的`rpc_token`。
+根据网速情况，大约5到30分钟就可以自动搭建完成，全程无需人工干预。
 
-修改`custom_settings.py`可以自定义站点信息。
+等命令执行完成，然后运行 `docker ps -a`，当看到所有的容器的状态没有 `unhealthy` 或 `Exited (x) xxx` 就代表 OJ 已经启动成功。
+
+## 尽情享用吧
+
+通过浏览器访问服务器的 HTTP 80 端口或者 HTTPS 443 端口，就可以开始使用了。后台管理路径为`/admin`, 安装过程中自动添加的超级管理员用户名为 `root`，密码为 `rootroot`， **请务必及时修改密码**。
+
+不要忘记阅读文档 http://docs.onlinejudge.me/
+
+## 定制
+
+2.0 版将一些常用设置放到了后台管理中，您可以直接登录管理后台对系统进行配置，而无需进行代码改动。
+
+若需要对系统进行修改或二次开发，请参照各模块的**README**，修改完成后需自行构建Docker镜像并修改`docker-compose.yml`
+
+## 遇到了问题？
+
+请参照: [http://docs.onlinejudge.me/](http://docs.onlinejudge.me/#/onlinejudge/faq) ，如有其他问题请入群讨论或提issue。

@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 services:
     oj_redis:
         image: registry.cn-hangzhou.aliyuncs.com/qduoj/redis:3.0-alpine
@@ -7,45 +7,68 @@ services:
         volumes:
             - $PWD/data/redis:/data
 
-    oj_mysql:
-        image: registry.cn-hangzhou.aliyuncs.com/qduoj/mysql
-        container_name: oj_mysql
-        restart: always
-        volumes:
-            - $PWD/data/mysql:/var/lib/mysql
-        environment:
-            - MYSQL_ROOT_PASSWORD=MYSQL_PASSWORD_AAA
+  oj-redis:
+    image: redis:4.0-alpine
+    container_name: oj-redis
+    restart: always
+    volumes:
+      - ./data/redis:/data
+  
+  oj-postgres:
+    image: postgres:10-alpine
+    container_name: oj-postgres
+    restart: always
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=onlinejudge
+      - POSTGRES_USER=onlinejudge
+      - POSTGRES_PASSWORD=onlinejudge
 
-    judger:
-        image: registry.cn-hangzhou.aliyuncs.com/qduoj/judger
-        container_name: judger
-        restart: always
-        volumes:
-            - $PWD/data/test_case:/var/judger/test_case
-            - $PWD/data/log:/var/judger/code/judge/log
-        environment:
-            - TZ=Asia/Shanghai
-            - rpc_token={YOUR_PASSWORD}
-
-    oj_web_server:
-        image: registry.cn-hangzhou.aliyuncs.com/qduoj/oj_web_server
-        container_name: oj_web_server
-        restart: always
-        links:
-            - oj_mysql
-            - oj_redis
-            - judger
-        volumes:
-            - $PWD/data/test_case:/code/test_case
-            - $PWD/data/upload:/code/upload
-            - $PWD/data/log:/code/log
-            - $PWD/data/ssl:/code/ssl
-            - $PWD/custom_settings.py:/code/oj/custom_settings.py
-        environment:
-            - TZ=Asia/Shanghai
-            - oj_env=server
-            - MYSQL_ENV_MYSQL_USER=root
-            - MYSQL_ENV_MYSQL_ROOT_PASSWORD=MYSQL_PASSWORD_AAA
-        ports:
-            - "0.0.0.0:80:80"
-            - "0.0.0.0:443:443"
+  judge-server:
+    image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
+    container_name: judge-server
+    restart: always
+    read_only: true
+    cap_drop:
+      - SETPCAP
+      - MKNOD
+      - NET_BIND_SERVICE
+      - SYS_CHROOT
+      - SETFCAP
+      - FSETID
+    tmpfs:
+      - /tmp
+    volumes:
+      - ./data/backend/test_case:/test_case:ro
+      - ./data/judge_server/log:/log
+      - ./data/judge_server/run:/judger
+      - ./JudgeServer/server:/code
+    environment:
+      - SERVICE_URL=http://judge-server:8080
+      - BACKEND_URL=http://oj-backend:8000/api/judge_server_heartbeat/
+      - TOKEN=CHANGE_THIS
+      # - judger_debug=1
+  
+  oj-backend:
+    image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/oj_backend
+    container_name: oj-backend
+    restart: always
+    depends_on:
+      - oj-redis
+      - oj-postgres
+      - judge-server
+    volumes:
+      - ./data/backend:/data
+      - ./JudgeBackend:/app
+      - ./JudgeAPI:/api
+    environment:
+      - POSTGRES_DB=onlinejudge
+      - POSTGRES_USER=onlinejudge
+      - POSTGRES_PASSWORD=onlinejudge
+      - JUDGE_SERVER_TOKEN=CHANGE_THIS
+      # - FORCE_HTTPS=1
+      # - STATIC_CDN_HOST=cdn.oj.com
+    ports:
+      - "0.0.0.0:80:8000"
+      - "0.0.0.0:443:1443"

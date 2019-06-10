@@ -1,0 +1,7 @@
+[run]
+omit = */urls/*
+       */__init__.py
+       */tests.py
+       */migrations/*
+       *urls.py
+       utils/xss_filter.py
