@@ -1,11 +1,11 @@
 version: "3"
 services:
-    oj_redis:
-        image: registry.cn-hangzhou.aliyuncs.com/qduoj/redis:3.0-alpine
-        container_name: oj_redis
-        restart: always
-        volumes:
-            - $PWD/data/redis:/data
+    #oj_redis:
+    #image: registry.cn-hangzhou.aliyuncs.com/qduoj/redis:3.0-alpine
+    #container_name: oj_redis
+    #restart: always
+    #volumes:
+    #- $PWD/data/redis:/data
 
   oj-redis:
     image: redis:4.0-alpine
