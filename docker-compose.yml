@@ -43,7 +43,7 @@ services:
       - ./data/backend/test_case:/test_case:ro
       - ./data/judge_server/log:/log
       - ./data/judge_server/run:/judger
-        #- ./JudgeServer/server:/code
+      - ./JudgeServer/server:/code
     environment:
       - SERVICE_URL=http://judge-server:8080
       - BACKEND_URL=http://oj-backend:8000/api/judge_server_heartbeat/
