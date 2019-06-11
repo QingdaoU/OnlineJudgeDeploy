@@ -89,6 +89,7 @@ class JudgeServer:
 
                 # write source code into file
                 with open(src_path, "w", encoding="utf-8") as f:
+                    src = "import sys \nimport codecs \nsys.stdout = codecs.getwriter('utf-8')(sys.stdout.detach()) \n" + src
                     f.write(src)
                 os.chown(src_path, COMPILER_USER_UID, 0)
                 os.chmod(src_path, 0o400)
