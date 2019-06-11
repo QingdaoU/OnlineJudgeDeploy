@@ -1,0 +1,25 @@
+version: "3"
+services:
+    judge_server:
+        image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
+        read_only: true
+        cap_drop:
+            - SETPCAP
+            - MKNOD
+            - NET_BIND_SERVICE
+            - SYS_CHROOT
+            - SETFCAP
+            - FSETID
+        tmpfs:
+            - /tmp
+        volumes:
+            - $PWD/tests/test_case:/test_case:ro
+            - $PWD/log:/log
+            # - $PWD/server:/code:ro
+            - $PWD/run:/judger
+        environment:
+            - BACKEND_URL=http://backend:80/api/judge_server_heartbeat
+            - SERVICE_URL=http://judge-server:12358
+            - TOKEN=YOUR_TOKEN_HERE
+        ports:
+            - "0.0.0.0:12358:8080"
