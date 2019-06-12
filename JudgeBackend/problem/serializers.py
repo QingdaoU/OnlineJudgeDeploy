@@ -250,11 +250,13 @@ class ImportProblemSerializer(serializers.Serializer):
     memory_limit = serializers.IntegerField(min_value=1, max_value=10240)
     samples = serializers.ListField(child=CreateSampleSerializer())
     template = serializers.DictField(child=TemplateSerializer())
+    languages = LanguageNameMultiChoiceField()
     spj = SPJSerializer(allow_null=True)
     rule_type = serializers.ChoiceField(choices=ProblemRuleType.choices())
     source = serializers.CharField(max_length=200, allow_blank=True, allow_null=True)
     answers = serializers.ListField(child=AnswerSerializer())
     tags = serializers.ListField(child=serializers.CharField())
+    visible = serializers.BooleanField(default=False)
 
 
 class FPSProblemSerializer(serializers.Serializer):

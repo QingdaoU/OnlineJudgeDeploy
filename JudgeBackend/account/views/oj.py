@@ -1,5 +1,8 @@
 import os
+import hashlib
 import logging
+import zipfile
+import json
 from datetime import timedelta
 from importlib import import_module
 
@@ -12,12 +15,12 @@ from django.utils.timezone import now
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from otpauth import OtpAuth
 
-from problem.models import Problem
+from problem.models import Problem, ProblemTag, ProblemRuleType
 from utils.constants import ContestRuleType
 from options.options import SysOptions
 from utils.api import APIView, validate_serializer, CSRFExemptAPIView
 from utils.captcha import Captcha
-from utils.shortcuts import rand_str, img2base64, datetime2str
+from utils.shortcuts import rand_str, img2base64, datetime2str, natural_sort_key
 from ..decorators import login_required
 from ..models import User, UserProfile, AdminType
 from ..serializers import (ApplyResetPasswordSerializer, ResetPasswordSerializer,
@@ -25,7 +28,7 @@ from ..serializers import (ApplyResetPasswordSerializer, ResetPasswordSerializer
                            UserRegisterSerializer, UsernameOrEmailCheckSerializer,
                            RankInfoSerializer, UserChangeEmailSerializer, SSOSerializer)
 from ..serializers import (TwoFactorAuthCodeSerializer, UserProfileSerializer,
-                           EditUserProfileSerializer, ImageUploadForm)
+                           EditUserProfileSerializer, ImageUploadForm, FileUploadForm)
 from ..tasks import send_email_async
 
 logger = logging.getLogger(__name__)
@@ -64,7 +67,157 @@ class UserProfileAPI(APIView):
         return self.success(UserProfileSerializer(user_profile, show_real_name=True).data)
 
 
-class AvatarUploadAPI(APIView):
+class UploadProblemAPI(CSRFExemptAPIView):
+    request_parsers = ()
+
+    def post(self, request):
+        #logger.exception(request.POST)
+        data = json.loads(request.POST['json'])
+        logger.exception(data)
+        _id = data["_id"]
+        if not _id:
+            return self.error("Display ID is required")
+        if Problem.objects.filter(_id=_id, contest_id__isnull=True).exists():
+            return self.error("Display ID already exists")
+
+        #error_info = self.common_checks(data)
+        #if error_info:
+            #return self.error(error_info)
+
+        # todo check filename and score info
+        tags = data.pop("tags")
+        data["template"] = {}
+        data["created_by"] = User.objects.first()
+        problem = Problem.objects.create(**data)
+
+        for item in tags:
+            try:
+                tag = ProblemTag.objects.get(name=item)
+            except ProblemTag.DoesNotExist:
+                tag = ProblemTag.objects.create(name=item)
+            problem.tags.add(tag)
+        return self.success("Succeeded")
+
+    def common_checks(self, data):
+        logger.exception(data['spj'])
+        if data["spj"] and data["spj"] != "False":
+            if not data["spj_language"] or not data["spj_code"]:
+                return "Invalid spj"
+            if not data["spj_compile_ok"]:
+                return "SPJ code must be compiled successfully"
+            data["spj_version"] = hashlib.md5(
+                (data["spj_language"] + ":" + data["spj_code"]).encode("utf-8")).hexdigest()
+        else:
+            data["spj_language"] = None
+            data["spj_code"] = None
+        if data["rule_type"] == ProblemRuleType.OI:
+            total_score = 0
+            for item in data["test_case_score"]:
+                if item["score"] <= 0:
+                    return "Invalid score"
+                else:
+                    total_score += item["score"]
+            data["total_score"] = total_score
+        data["languages"] = list(data["languages"])
+
+class UploadTestCaseAPI(CSRFExemptAPIView):
+    request_parsers = ()
+
+    def post(self, request):
+        form = FileUploadForm(request.POST, request.FILES)
+        logger.exception(form)
+        if form.is_valid():
+            spj = False
+            file = form.cleaned_data["file"]
+        else:
+            return self.error("Upload failed")
+        zip_file = f"/tmp/{rand_str()}.zip"
+        with open(zip_file, "wb") as f:
+            for chunk in file:
+                f.write(chunk)
+        info, test_case_id = self.process_zip(zip_file, spj=spj)
+        os.remove(zip_file)
+        return self.success({"id": test_case_id, "info": info, "spj": spj})
+
+    def process_zip(self, uploaded_zip_file, spj, dir=""):
+        try:
+            zip_file = zipfile.ZipFile(uploaded_zip_file, "r")
+        except zipfile.BadZipFile:
+            raise self.error("Bad zip file")
+        name_list = zip_file.namelist()
+        test_case_list = self.filter_name_list(name_list, spj=spj, dir=dir)
+        if not test_case_list:
+            raise self.error("Empty file")
+
+        test_case_id = rand_str()
+        test_case_dir = os.path.join(settings.TEST_CASE_DIR, test_case_id)
+        os.mkdir(test_case_dir)
+        os.chmod(test_case_dir, 0o710)
+
+        size_cache = {}
+        md5_cache = {}
+
+        for item in test_case_list:
+            with open(os.path.join(test_case_dir, item), "wb") as f:
+                content = zip_file.read(f"{dir}{item}").replace(b"\r\n", b"\n")
+                size_cache[item] = len(content)
+                if item.endswith(".out"):
+                    md5_cache[item] = hashlib.md5(content.rstrip()).hexdigest()
+                f.write(content)
+        test_case_info = {"spj": spj, "test_cases": {}}
+
+        info = []
+
+        if spj:
+            for index, item in enumerate(test_case_list):
+                data = {"input_name": item, "input_size": size_cache[item]}
+                info.append(data)
+                test_case_info["test_cases"][str(index + 1)] = data
+        else:
+            # ["1.in", "1.out", "2.in", "2.out"] => [("1.in", "1.out"), ("2.in", "2.out")]
+            test_case_list = zip(*[test_case_list[i::2] for i in range(2)])
+            for index, item in enumerate(test_case_list):
+                data = {"stripped_output_md5": md5_cache[item[1]],
+                        "input_size": size_cache[item[0]],
+                        "output_size": size_cache[item[1]],
+                        "input_name": item[0],
+                        "output_name": item[1]}
+                info.append(data)
+                test_case_info["test_cases"][str(index + 1)] = data
+
+        with open(os.path.join(test_case_dir, "info"), "w", encoding="utf-8") as f:
+            f.write(json.dumps(test_case_info, indent=4))
+
+        for item in os.listdir(test_case_dir):
+            os.chmod(os.path.join(test_case_dir, item), 0o640)
+
+        return info, test_case_id
+
+    def filter_name_list(self, name_list, spj, dir=""):
+        ret = []
+        prefix = 1
+        if spj:
+            while True:
+                in_name = f"{prefix}.in"
+                if f"{dir}{in_name}" in name_list:
+                    ret.append(in_name)
+                    prefix += 1
+                    continue
+                else:
+                    return sorted(ret, key=natural_sort_key)
+        else:
+            while True:
+                in_name = f"{prefix}.in"
+                out_name = f"{prefix}.out"
+                if f"{dir}{in_name}" in name_list and f"{dir}{out_name}" in name_list:
+                    ret.append(in_name)
+                    ret.append(out_name)
+                    prefix += 1
+                    continue
+                else:
+                    return sorted(ret, key=natural_sort_key)
+
+class AvatarUploadAPI(CSRFExemptAPIView):
     request_parsers = ()
 
     @login_required

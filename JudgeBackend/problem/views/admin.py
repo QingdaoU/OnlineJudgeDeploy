@@ -586,6 +586,7 @@ class ImportProblemAPI(CSRFExemptAPIView, TestCaseZipProcessor):
 
                         spj = problem_info["spj"] is not None
                         rule_type = problem_info["rule_type"]
+                        problem_info["languages"] = list(problem_info["languages"])
                         test_case_score = problem_info["test_case_score"]
 
                         # process test case
@@ -611,9 +612,9 @@ class ImportProblemAPI(CSRFExemptAPIView, TestCaseZipProcessor):
                                                              spj_language=problem_info["spj"][
                                                                  "language"] if spj else None,
                                                              spj_version=rand_str(8) if spj else "",
-                                                             languages=SysOptions.language_names,
+                                                             languages=problem_info["languages"],
                                                              created_by=request.user,
-                                                             visible=False,
+                                                             visible=problem_info["visible"],
                                                              difficulty=Difficulty.MID,
                                                              total_score=sum(item["score"] for item in test_case_score)
                                                              if rule_type == ProblemRuleType.OI else 0,
