@@ -58,7 +58,7 @@ class JudgeServer:
     @classmethod
     def judge(cls, language_config, src, max_cpu_time, max_memory, test_case_id=None, test_case=None,
               spj_version=None, spj_config=None, spj_compile_config=None, spj_src=None, output=False,
-              io_mode=None):
+              io_mode=None, output_description=None):
         if not io_mode:
             io_mode = {"io_mode": ProblemIOMode.standard}
 
@@ -147,7 +147,8 @@ class JudgeServer:
                                        spj_version=spj_version,
                                        spj_config=spj_config,
                                        output=output,
-                                       io_mode=io_mode)
+                                       io_mode=io_mode,
+                                       output_description=output_description)
             run_result = judge_client.run()
 
             return run_result

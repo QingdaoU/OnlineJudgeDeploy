@@ -2,6 +2,7 @@ import _judger
 import hashlib
 import json
 import os
+import re
 import shutil
 from multiprocessing import Pool
 
@@ -22,7 +23,7 @@ def _run(instance, test_case_file_id):
 
 class JudgeClient(object):
     def __init__(self, run_config, exe_path, max_cpu_time, max_memory, test_case_dir,
-                 submission_dir, spj_version, spj_config, io_mode, output=False):
+                 submission_dir, spj_version, spj_config, io_mode, output=False, output_description=None):
         self._run_config = run_config
         self._exe_path = exe_path
         self._max_cpu_time = max_cpu_time
@@ -38,6 +39,8 @@ class JudgeClient(object):
         self._spj_config = spj_config
         self._output = output
         self._io_mode = io_mode
+        pattern = re.compile(r'<[^>]+>',re.S)
+        self._output_description = pattern.sub('', output_description)
 
         if self._spj_version and self._spj_config:
             self._spj_exe = os.path.join(SPJ_EXE_DIR,
@@ -158,6 +161,8 @@ class JudgeClient(object):
                     elif spj_result == SPJ_ERROR:
                         run_result["result"] = _judger.RESULT_SYSTEM_ERROR
                         run_result["error"] = _judger.ERROR_SPJ_ERROR
+                elif self._output_description == 'None':
+                    pass
                 else:
                     run_result["output_md5"], is_ac = self._compare_output(test_case_file_id, user_output_file)
                     # -1 == Wrong Answer
