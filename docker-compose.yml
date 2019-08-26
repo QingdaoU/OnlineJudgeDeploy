@@ -11,7 +11,6 @@ services:
   oj-postgres:
     image: postgres:10-alpine
     container_name: oj-postgres
-    restart: always
     volumes:
       - $PWD/data/postgres:/var/lib/postgresql/data
     environment:
@@ -19,8 +18,14 @@ services:
       - POSTGRES_USER=onlinejudge
       - POSTGRES_PASSWORD=onlinejudge
 
+  oj-php:
+    image: php:7.3-fpm-alpine3.10
+    container_name: oj-php
+    restart: always
+    
   judge-server:
     image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
+    # image: registry.cn-hangzhou.aliyuncs.com/wenjian_oj/judgeserver
     container_name: judge-server
     restart: always
     read_only: true
@@ -41,18 +46,23 @@ services:
       - SERVICE_URL=http://judge-server:8080
       - BACKEND_URL=http://oj-backend:8000/api/judge_server_heartbeat/
       - TOKEN=CHANGE_THIS
-      # - judger_debug=1
+      - judger_debug=1
   
   oj-backend:
-    image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/oj_backend
+    image: registry.cn-qingdao.aliyuncs.com/wenjian_oj/backend
+    # image: registry.cn-hangzhou.aliyuncs.com/wenjian_oj/oj-backend
+    # image: registry.cn-qingdao.aliyuncs.com/wenjian_oj/vue:v1.3.8.2
+    # image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/oj_backend
     container_name: oj-backend
     restart: always
     depends_on:
       - oj-redis
       - oj-postgres
       - judge-server
+      - oj-php
     volumes:
       - $PWD/data/backend:/data
+      - $PWD/live2d:/live2d
     environment:
       - POSTGRES_DB=onlinejudge
       - POSTGRES_USER=onlinejudge
