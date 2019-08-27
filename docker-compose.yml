@@ -51,8 +51,8 @@ services:
       - judger_debug=1
   
   oj-backend:
-    # image: registry.cn-hangzhou.aliyuncs.com/wenjian_oj/oj-backend:live2d
-    image: registry.cn-qingdao.aliyuncs.com/wenjian_oj/backend
+    image: registry.cn-hangzhou.aliyuncs.com/wenjian_oj/oj-backend:live2d
+    # image: registry.cn-qingdao.aliyuncs.com/wenjian_oj/backend
     # image: registry.cn-hangzhou.aliyuncs.com/wenjian_oj/oj-backend
     # image: registry.cn-qingdao.aliyuncs.com/wenjian_oj/vue:v1.3.8.2
     # image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/oj_backend
