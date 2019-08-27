@@ -24,8 +24,6 @@ services:
     restart: always
     volumes:
       - $PWD/data/live2d:/var/www/html/api/live2d
-    ports:
-      - "0.0.0.0:9000:9000"
     
   judge-server:
     image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
@@ -54,10 +52,15 @@ services:
   
   oj-backend:
     image: registry.cn-hangzhou.aliyuncs.com/wenjian_oj/oj-backend:live2d
+    # live2d开发版
     # image: registry.cn-qingdao.aliyuncs.com/wenjian_oj/backend
+    # 稳定版
     # image: registry.cn-hangzhou.aliyuncs.com/wenjian_oj/oj-backend
-    # image: registry.cn-qingdao.aliyuncs.com/wenjian_oj/vue:v1.3.8.2
+    # 开发版
+    # image: registry.cn-qingdao.aliyuncs.com/wenjian_oj/vue
+    # 版本备份镜像仓库
     # image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/oj_backend
+    # 官方版
     container_name: oj-backend
     restart: always
     depends_on:
@@ -65,6 +68,8 @@ services:
       - oj-postgres
       - judge-server
       - oj-php
+    volumes_from:
+      - php
     volumes:
       - $PWD/data/backend:/data
       - $PWD/data/live2d:/var/www/html/api/live2d
