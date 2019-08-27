@@ -23,7 +23,7 @@ services:
     container_name: oj-php
     restart: always
     volumes:
-      - $PWD/data/live2d:/var/www/html/api/live2d
+      - $PWD/data/live2d:/var/www/html
     
   judge-server:
     image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
@@ -68,8 +68,6 @@ services:
       - oj-postgres
       - judge-server
       - oj-php
-    volumes_from:
-      - php
     volumes:
       - $PWD/data/backend:/data
       - $PWD/data/live2d:/var/www/html/api/live2d
