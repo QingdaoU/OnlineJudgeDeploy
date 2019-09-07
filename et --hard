@@ -1,0 +1,47 @@
+[33m9c1919c5170b1ea5030e815ce27b4e2bf13fabd9[m[33m ([m[1;36mHEAD -> [m[1;32mlive2d[m[33m)[m 添加lnmp Docker镜像
+[33mfa155b5b114a8729df85126973c09cab902bfd19[m 添加lnmp Docker镜像
+[33m060a2b002fa46d11e26ff460789b67972e9dfa89[m[33m ([m[1;31morigin/live2d[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/2.0[m[33m, [m[1;32m2.0[m[33m)[m fix bugs
+[33mef5d17fab2b272bcc91d237dff032774a00972dd[m fix bugs
+[33me0044d1dc44a12b1cae6a79997265eae07f5bd7d[m fix bugs
+[33mf7d06cd22cafd6a3d8ce327117a025113b74169c[m fix bugs
+[33m821d9dd7648716f9df9f8c5e9fd535c9223898d6[m fix bugs
+[33m61d4be258cb927837c6397941b61f283c5dec39e[m fix bugs
+[33mae3ce299d73f5f97017ed340f8237956b287ccd8[m add functions
+[33m47811120234aae6f6ac18f6cbc69204276993b8d[m add judger_debug env
+[33mcfa8f15c257fdb3d30fc93584ef64a78e854b90a[m Update docker-compose.yml
+[33m6ce736cba2344a474f370c10fedb0ecbf202756b[m Update README.md
+[33mf6d4ec416d8892880fb93b7808710957a60443a1[m fix typo in README
+[33m1318169ea38ede2f1615112e8c971615b3cc79cf[m Revert "update README"
+[33m4ed9e95dd421d38de7eee8f77c76c9b20730f6f0[m Revert "use images from docker hub"
+[33m938bd9b502d8ee79324aa55e897200a2ed26a4b6[m update README
+[33mee64b6765383eed5a63338133dbaf368a8a6ecc6[m use images from docker hub
+[33m119d836b835be01a54ed06150f85288675c21617[m update README
+[33m13ca8d9fc22892de3a514e895d4bf53bf27f8000[m use docker.mirrors.ustc.edu.cn
+[33m37ad60913c5f536a74529faa556d9e9b55706269[m add judger dir
+[33mb0b80dc792e52ce7e2af867f04f022e26010bca5[m add restart: always
+[33m3f6196692ae960660f6ac6ac46132ebd704f2a52[m revert /dev/shm tmpfs
+[33m3baae4ed455197a5b3527928dd907b4aa6a4d017[m add /dev/shm to tmpfs
+[33m4aff6aae54aebaf9f882887fe200c93e9ee695b8[m 修正语法 (#6)
+[33m75c98193a6239e4f33aa7b2543d618ce42c350d1[m add backup script
+[33ma8c34a95e87cbf137972c219badfe7dfa51c34a4[m Update README.md
+[33mb685f53c9ff018761f314a806650b811b0f2748f[m Update README.md
+[33me7aec9dd1f25f2496a6d592bd6f0767129ad48fa[m Update README.md
+[33m51ad3f04eda7f2a7cf19e840b198a737ec19d72a[m Update README.md
+[33m44361fad485c5ee0fad237cd9d9ef709ece446b9[m add STATIC_CDN_HOST env configuration
+[33m8fa08e7f986ea5a9b4ae45283123e8c95d19bd71[m add FORCE_HTTPS env
+[33m07b640e837a137bece79b790c0f36246ae4737b4[m fix env name
+[33mfcb8a9b17a6f23c816dca8c2b31c7eae7a1a7d93[m fix url name
+[33mef32aba0abeed0f4e9bd193bd95a796dba09e192[m update readme
+[33m5a988284bf3b6f973c53d906795544319a26653b[m update README
+[33m91ab378377f83f65ed8d9cf3c979a656c1cb3659[m update
+[33ma18b5dc7bad1e8b2c32d18eecc382119727812cd[m update
+[33m7c01344e86b7bd9429a6f1c1f6ab9ae0165bf2a2[m update docker-compose file
+[33m630f15183b149e7178defcf1baeca0225adf8935[m update README
+[33m579ba4e0728e0e45f077a470d6f9175d821cd808[m 2.0版部署文档
+[33m86b23625a0d1d924ad66258591d807f32dc6fd1a[m Update README.md
+[33m59770ce638d1563c3832ecd67177b46196315127[m 添加Windows部署教程 (#3)
+[33ma319f42981a0e2bc9aa1f8b9d98ab1261197e380[m Update README.md
+[33m5a3d1143dd65c82752456115edf37504af2ba038[m 增加修改设置后重启的提示
+[33m43735bcf4941d385ead14752315dd6c124127753[m Update README.md
+[33m65fe5dbda71ff5f4c241393ee9779c2f3efdbd4b[m update
+[33m5fb7f2cafe55c604308f12043eec3ba373a7fea4[m init

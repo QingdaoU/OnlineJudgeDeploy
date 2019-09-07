@@ -18,12 +18,15 @@ services:
       - POSTGRES_USER=onlinejudge
       - POSTGRES_PASSWORD=onlinejudge
 
-  oj-php:
-    image: php:7.3-fpm-alpine3.10
-    container_name: oj-php
+  oj-forum:
+    image: fbraz3/lnmp:7.2
+    container_name: oj-forum
     restart: always
     volumes:
-      - $PWD/data/live2d:/var/www/html
+      - $PWD/data/forum:/app/public
+    ports:
+      - "0.0.0.0:8080:80"
+      - "0.0.0.0:3306:3306"
     
   judge-server:
     image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
@@ -67,7 +70,7 @@ services:
       - oj-redis
       - oj-postgres
       - judge-server
-      - oj-php
+      - oj-forum
     volumes:
       - $PWD/data/backend:/data
       - $PWD/data/live2d:/var/www/html/api/live2d
