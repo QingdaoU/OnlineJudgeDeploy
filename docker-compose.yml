@@ -73,7 +73,6 @@ services:
       - oj-forum
     volumes:
       - $PWD/data/backend:/data
-      - $PWD/data/live2d:/var/www/html/api/live2d
     environment:
       - POSTGRES_DB=onlinejudge
       - POSTGRES_USER=onlinejudge
