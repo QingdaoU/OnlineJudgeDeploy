@@ -1,1 +1,3 @@
 data/
+backup/
+!backup/db_backup.sh
