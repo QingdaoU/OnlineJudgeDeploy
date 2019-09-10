@@ -2,6 +2,6 @@ data/backend/
 data/judge_server/
 data/postgres/
 data/redis/
-data/forum/
+data/rsync_master/
 backup/
 !backup/db_backup.sh
