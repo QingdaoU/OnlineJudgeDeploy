@@ -56,7 +56,7 @@ elif [ "$num" == "5" ]
     ./oj.sh
 elif [ "$num" == "6" ]
     then
-    docker stop oj-backend judge-server oj-postgres oj-redis oj-php
+    docker-compose stop
     read -s -p "按回车键继续……" continue
     reset
     ./oj.sh

@@ -3,3 +3,5 @@ data/judge_server/
 data/postgres/
 data/redis/
 data/forum/
+backup/
+!backup/db_backup.sh

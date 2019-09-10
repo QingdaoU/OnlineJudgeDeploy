@@ -11,6 +11,7 @@ services:
   oj-postgres:
     image: postgres:10-alpine
     container_name: oj-postgres
+    restart: always
     volumes:
       - $PWD/data/postgres:/var/lib/postgresql/data
     environment:
@@ -24,9 +25,6 @@ services:
     restart: always
     volumes:
       - $PWD/data/forum:/app/public
-    ports:
-      - "0.0.0.0:8080:80"
-      - "0.0.0.0:3306:3306"
     
   judge-server:
     image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
