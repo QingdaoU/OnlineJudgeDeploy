@@ -21,10 +21,13 @@ services:
 
   oj-forum:
     image: fbraz3/lnmp:7.2
+    # image: registry.cn-hangzhou.aliyuncs.com/wenjian_oj/oj-forum
     container_name: oj-forum
     restart: always
     volumes:
       - $PWD/data/forum:/app/public
+      # - $PWD/data/model:/app/public/api/live2d/model
+      # - $PWD/data/mysql:/var/lib/mysql
     
   judge-server:
     image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server

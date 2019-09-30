@@ -16,7 +16,8 @@ echo "2.查看状态"
 echo "3.更新"
 echo "4.备份"
 echo "5.导入数据(bate)"
-echo "6.关闭"
+echo "6.重启"
+echo "7.关闭"
 read -p "请输入代码：" num
 if [ "$num" == "1" ]
     then
@@ -55,6 +56,12 @@ elif [ "$num" == "5" ]
     reset
     ./oj.sh
 elif [ "$num" == "6" ]
+    then
+    docker-compose restart
+    read -s -p "按回车键继续……" continue
+    reset
+    ./oj.sh
+elif [ "$num" == "7" ]
     then
     docker-compose stop
     read -s -p "按回车键继续……" continue

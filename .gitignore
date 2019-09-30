@@ -1,7 +1,4 @@
-data/backend/
-data/judge_server/
-data/postgres/
-data/redis/
-data/rsync_master/
+data/
+!data/model/readme.md
 backup/
 !backup/db_backup.sh
