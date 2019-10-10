@@ -23,7 +23,8 @@ def _run(instance, test_case_file_id):
 
 class JudgeClient(object):
     def __init__(self, run_config, exe_path, max_cpu_time, max_memory, test_case_dir,
-                 submission_dir, spj_version, spj_config, io_mode, output=False, output_description=None):
+                 submission_dir, spj_version, spj_config, io_mode, submission_id, input_str, 
+                 output=False, output_description=None):
         self._run_config = run_config
         self._exe_path = exe_path
         self._max_cpu_time = max_cpu_time
@@ -31,6 +32,7 @@ class JudgeClient(object):
         self._max_real_time = self._max_cpu_time * 3
         self._test_case_dir = test_case_dir
         self._submission_dir = submission_dir
+        self._submission_id = submission_id
 
         self._pool = Pool(processes=psutil.cpu_count())
         self._test_case_info = self._load_test_case_info()
@@ -39,6 +41,8 @@ class JudgeClient(object):
         self._spj_config = spj_config
         self._output = output
         self._io_mode = io_mode
+        self._input_str = input_str       
+
         pattern = re.compile(r'<[^>]+>',re.S)
         self._output_description = pattern.sub('', output_description)
 
@@ -64,7 +68,8 @@ class JudgeClient(object):
         with open(user_output_file, "rb") as f:
             content = f.read()
         output_md5 = hashlib.md5(content.rstrip()).hexdigest()
-        result = output_md5 == self._get_test_case_file_info(test_case_file_id)["stripped_output_md5"]
+        result = output_md5 == self._get_test_case_file_info(test_case_file_id)["stripped_output_md5"]\
+        if self._input_str is None else True
         return output_md5, result
 
     def _spj(self, in_file_path, user_out_file_path):
@@ -101,7 +106,10 @@ class JudgeClient(object):
 
     def _judge_one(self, test_case_file_id):
         test_case_info = self._get_test_case_file_info(test_case_file_id)
-        in_file = os.path.join(self._test_case_dir, test_case_info["input_name"])
+        #in_file = os.path.join(self._test_case_dir, test_case_info["input_name"])
+        in_file = os.path.join(self._test_case_dir, self._submission_id + '.in')
+        with open(in_file, 'w+') as tmpf:
+            tmpf.write(self._input_str) if self._input_str else tmpf.write('')
 
         if self._io_mode["io_mode"] == ProblemIOMode.file:
             user_output_dir = os.path.join(self._submission_dir, str(test_case_file_id))
@@ -141,6 +149,7 @@ class JudgeClient(object):
                                  gid=RUN_GROUP_GID,
                                  memory_limit_check_only=self._run_config.get("memory_limit_check_only", 0),
                                  **kwargs)
+        os.remove(in_file)
         run_result["test_case"] = test_case_file_id
 
         # if progress exited normally, then we should check output result
