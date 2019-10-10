@@ -26,7 +26,8 @@ services:
       - POSTGRES_PASSWORD=onlinejudge
 
   judge-server:
-    image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
+    #image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
+    image: judger-local-python
     container_name: judge-server
     restart: always
     read_only: true
@@ -70,5 +71,5 @@ services:
       # - FORCE_HTTPS=1
       # - STATIC_CDN_HOST=cdn.oj.com
     ports:
-      - "0.0.0.0:8088:8000"
+      - "0.0.0.0:8089:8000"
         #- "0.0.0.0:443:1443"

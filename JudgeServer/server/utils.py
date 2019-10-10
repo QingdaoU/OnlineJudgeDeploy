@@ -2,7 +2,7 @@ import _judger
 import hashlib
 import logging
 import os
-import socket
+#import socket
 
 import psutil
 
@@ -19,7 +19,8 @@ logger.setLevel(logging.WARNING)
 
 def server_info():
     ver = _judger.VERSION
-    return {"hostname": socket.gethostname(),
+    return {"hostname": "0.0.0.0",
+#socket.gethostname(),
             "cpu": psutil.cpu_percent(),
             "cpu_core": psutil.cpu_count(),
             "memory": psutil.virtual_memory().percent,
