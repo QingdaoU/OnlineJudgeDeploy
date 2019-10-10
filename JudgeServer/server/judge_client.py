@@ -69,7 +69,7 @@ class JudgeClient(object):
             content = f.read()
         output_md5 = hashlib.md5(content.rstrip()).hexdigest()
         result = output_md5 == self._get_test_case_file_info(test_case_file_id)["stripped_output_md5"]\
-        if self._input_str is None else True
+        if not self._input_str else True
         return output_md5, result
 
     def _spj(self, in_file_path, user_out_file_path):
@@ -106,10 +106,12 @@ class JudgeClient(object):
 
     def _judge_one(self, test_case_file_id):
         test_case_info = self._get_test_case_file_info(test_case_file_id)
-        #in_file = os.path.join(self._test_case_dir, test_case_info["input_name"])
-        in_file = os.path.join(self._test_case_dir, self._submission_id + '.in')
-        with open(in_file, 'w+') as tmpf:
-            tmpf.write(self._input_str) if self._input_str else tmpf.write('')
+        if self._input_str:
+            in_file = os.path.join(self._test_case_dir, self._submission_id + '.in')
+            with open(in_file, 'w+') as tmpf:
+                tmpf.write(self._input_str)
+        else:
+            in_file = os.path.join(self._test_case_dir, test_case_info["input_name"])
 
         if self._io_mode["io_mode"] == ProblemIOMode.file:
             user_output_dir = os.path.join(self._submission_dir, str(test_case_file_id))
@@ -149,7 +151,9 @@ class JudgeClient(object):
                                  gid=RUN_GROUP_GID,
                                  memory_limit_check_only=self._run_config.get("memory_limit_check_only", 0),
                                  **kwargs)
-        os.remove(in_file)
+        if self._input_str:
+            os.remove(in_file)
+
         run_result["test_case"] = test_case_file_id
 
         # if progress exited normally, then we should check output result
