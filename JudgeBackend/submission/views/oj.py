@@ -77,7 +77,8 @@ class SubmissionAPI(CSRFExemptAPIView):
                                                code=data["code"],
                                                problem_id=problem.id,
                                                ip=request.session["ip"],
-                                               contest_id=data.get("contest_id"))
+                                               contest_id=data.get("contest_id"),
+                                               input_str=data.get('input_str', None))
         # use this for debug
         # JudgeDispatcher(submission.id, problem.id).judge()
         judge_task.send(submission.id, problem.id)

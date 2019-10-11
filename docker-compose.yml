@@ -41,7 +41,7 @@ services:
     tmpfs:
       - /tmp
     volumes:
-      - ./data/backend/test_case:/test_case:ro
+      - ./data/backend/test_case:/test_case
       - ./data/judge_server/log:/log
       - ./data/judge_server/run:/judger
       - ./JudgeServer/server:/code

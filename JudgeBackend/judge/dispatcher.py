@@ -151,7 +151,7 @@ class JudgeDispatcher(DispatcherBase):
             "spj_src": self.problem.spj_code,
             "io_mode": self.problem.io_mode,
             "output_description": self.problem.output_description,
-            "input_str": self.problem.input_str
+            "input_str": self.submission.input_str
         }
 
         with ChooseJudgeServer() as server:
