@@ -6,6 +6,7 @@
 
     ```bash
     sudo apt-get update && sudo apt-get install -y vim python-pip curl git
+    pip install --upgrade pip
     pip install docker-compose
     ```
 
