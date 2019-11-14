@@ -30,8 +30,12 @@ services:
       # - $PWD/data/mysql:/var/lib/mysql
     
   judge-server:
-    image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
+    # image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
+    # 原版镜像
     # image: registry.cn-hangzhou.aliyuncs.com/wenjian_oj/judgeserver
+    # 开发版镜像
+    image: registry.cn-qingdao.aliyuncs.com/wenjian_oj/judge_server
+    # 稳定版镜像
     container_name: judge-server
     restart: always
     read_only: true
