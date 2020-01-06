@@ -111,7 +111,7 @@
 
     ```bash
     sudo docker run hello-world
-    # 显示Hello from Docker!字样即为成功运行
+    # 显示Hello from Docker!等字样且无报错即为成功运行
     ```
 
     - 验证后，可以通过`sudo docker rm $(docker ps -aq); sudo docker rmi hello-world`删除`hello-world`镜像（前半句命令会删除本机的所有docker容器，请确保没有其他重要容器存在，如有请使用`sudo docker ps -a`找到`hello-world`容器并执行`sudo docker rm ${容器ID}`手动删除该容器。
