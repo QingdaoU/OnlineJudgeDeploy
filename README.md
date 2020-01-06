@@ -6,7 +6,7 @@
 
 1. 安装必要的依赖
 
-    - 如果apt速度慢请参阅[FAQ](./doc/faq.md) [安装依赖组件超时或速度慢]
+    - 如果apt速度慢请参阅[FAQ](./doc/faq.md#安装依赖组件超时或速度慢)
 
     ```bash
     sudo apt-get update
@@ -53,13 +53,13 @@
 
 3. 配置非root用户运行
 
-    - 如果需要非root用户也能运行docker（例如运维不开放root用户），请参阅[FAQ](./doc/faq.md) [配置非root用户运行]
+    - 如果需要非root用户也能运行docker（例如运维不开放root用户），请参阅[FAQ](./doc/faq.md#配置非root用户运行)
 
     - 注意：将非root添加至`docker`用户组后，由该用户运行的容器仍可获得root权限，可能会有一定安全隐患。[参阅](https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface)
 
 4. 国内服务器配置Docker镜像源
 
-    - 参阅[FAQ](./doc/faq.md) [国内服务器配置阿里云Docker镜像仓库]
+    - 参阅[FAQ](./doc/faq.md#国内服务器配置阿里云Docker镜像仓库)
 
 5. 安装Docker时的常见问题
 
