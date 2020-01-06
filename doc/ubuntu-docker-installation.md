@@ -30,6 +30,8 @@
     sudo apt-get update
     ```
 
+    - 如果apt速度慢请参阅[FAQ](./faq.md#安装依赖组件超时或速度慢)
+
 3. 安装依赖组件
 
     ```bash
