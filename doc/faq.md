@@ -34,6 +34,8 @@ sudo usermod -aG docker ${用户名}
 
 - 配置完成后，需要**重新登录**。
 
+- 注意：将非root添加至`docker`用户组后，由该用户运行的容器仍可获得root权限，可能会有一定安全隐患。[参阅](https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface)
+
 ## 国内服务器配置阿里云Docker镜像仓库
 
 1. 首先你需要一个阿里云账户
