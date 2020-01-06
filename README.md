@@ -1,20 +1,88 @@
+# QDUOJ Docker 镜像部署文档
+
 ## 环境准备
 
 ### Linux 环境
 
 1. 安装必要的依赖
 
+    - `apt`仅适用于Debian系（例如Debian、Ubuntu）Linux，红帽系（例如CentOS）请使用yum安装这些依赖
+    
+    - 如果apt速度慢请参阅[FAQ](./doc/faq.md#安装依赖组件超时或速度慢)
+
     ```bash
-    sudo apt-get update && sudo apt-get install -y vim python-pip curl git
-    pip install docker-compose
+    sudo apt-get update
+    sudo apt-get install -y vim python3-pip curl git
+    sudo pip3 install docker-compose -i https://pypi.tuna.tsinghua.edu.cn/simple
+    # 注意：国外服务器直接sudo pip3 install docker-compose即可，不需要指定软件源。
+    # 验证安装
+    docker-compose version
+    # docker-compose version 1.25.0, build 1110ad01
     ```
+
+    - 注意：pip更新后如果出现`Cannot import name "main"`请参阅[此处](./doc/pip-cannot-import-name-main.md)
+
+    - 执行`docker-compose version`时如提示找不到文件，请参阅[此处](./doc/cannot-find-docker-compose.md)
 
 2. 安装 Docker 
 
-    国内用户使用脚本一键安装: `sudo curl -sSL https://get.daocloud.io/docker | sh`  
-    国外用户使用脚本一键安装: `sudo curl -sSL get.docker.com | sh`
-    
-    详细步骤参照： [https://docs.docker.com/install/](https://docs.docker.com/install/)
+    - 使用一键脚本
+
+        - 国内服务器
+
+        ```bash
+        curl -fsSL https://get.daocloud.io/docker -o get-docker.sh
+        sudo sh get-docker.sh --mirror Aliyun
+        sudo service docker start
+        ```
+
+        - 国外服务器
+
+        ```bash
+        curl -fsSL https://get.docker.com -o get-docker.sh
+        sudo sh get-docker.sh
+        sudo service docker start
+        ```
+
+        - 注意：Docker并不推荐在生产环境中使用一键脚本安装（参阅[链接](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-convenience-script)）
+
+    - 分步安装
+
+        - 请参阅：
+
+            - [在Ubuntu服务器上安装Docker CE和docker-compose](./doc/ubuntu-docker-installation.md)
+
+            - [Docker官网](https://docs.docker.com/install/)
+
+3. 配置非root用户运行
+
+    - 如果需要非root用户也能运行docker（例如运维不开放root用户），请参阅[FAQ](./doc/faq.md#配置非root用户运行)
+
+    - 注意：将非root添加至`docker`用户组后，由该用户运行的容器仍可获得root权限，可能会有一定安全隐患。[参阅](https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface)
+
+4. 国内服务器配置Docker镜像源
+
+    - 参阅[FAQ](./doc/faq.md#国内服务器配置阿里云Docker镜像仓库)
+
+5. 安装Docker时的常见问题
+
+    - 参阅[FAQ](./doc/faq.md)
+
+    - 问题列表：
+
+        - 安装依赖组件超时或速度慢
+
+        - 国内服务器安装Docker超时或速度慢
+
+        - Docker pull 或 docker-compose pull 超时速度慢
+
+        - 安装docker-compose后运行提示/usr/bin/docker-compose: No such file or directory
+
+        - Couldn't connect to Docker daemon at ... - is it running?
+
+        - 配置非root用户运行
+
+        - 国内服务器配置阿里云Docker镜像仓库
 
 ### Windows 环境
 
