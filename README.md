@@ -6,6 +6,8 @@
 
 1. 安装必要的依赖
 
+    - `apt`仅适用于Debian系（例如Debian、Ubuntu）Linux，红帽系（例如CentOS）请使用yum安装这些依赖
+    
     - 如果apt速度慢请参阅[FAQ](./doc/faq.md#安装依赖组件超时或速度慢)
 
     ```bash
