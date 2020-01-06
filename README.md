@@ -12,6 +12,7 @@
     sudo apt-get update
     sudo apt-get install -y vim python3-pip curl git
     sudo pip3 install docker-compose -i https://pypi.tuna.tsinghua.edu.cn/simple
+    # 注意：国外服务器直接sudo pip3 install docker-compose即可，不需要指定软件源。
     # 验证安装
     docker-compose version
     # docker-compose version 1.25.0, build 1110ad01
