@@ -35,7 +35,7 @@ Windows 下的安装仅供体验，勿在生产环境使用。如有必要，请
 1. 请选择磁盘空间富余的位置，运行下面的命令
 
     ```bash
-    git clone -b 2.0 https://github.com/QingdaoU/OnlineJudgeDeploy.git && cd OnlineJudgeDeploy
+    git clone -b 2.0 https://github.com/Harry-zklcdc/OnlineJudgeDeploy.git && cd OnlineJudgeDeploy
     ```
 
 2. 启动服务
