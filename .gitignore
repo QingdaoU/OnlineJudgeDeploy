@@ -1,1 +1,4 @@
 data/
+!data/forum/api/live2d/model/readme.md
+backup/
+!backup/db_backup.sh
