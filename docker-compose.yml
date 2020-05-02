@@ -24,7 +24,7 @@ services:
     container_name: oj-forum
     restart: always
     volumes:
-      - $PWD/data/forum:/forum:ro
+      - $PWD/data/forum:/forum
     
   judge-server:
     # image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
@@ -73,7 +73,7 @@ services:
       - oj-forum
     volumes:
       - $PWD/data/backend:/data
-      - $PWD/data/forum:/forum:ro
+      - $PWD/data/forum:/forum
     environment:
       - POSTGRES_DB=onlinejudge
       - POSTGRES_USER=onlinejudge
