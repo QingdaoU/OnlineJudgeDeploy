@@ -20,14 +20,11 @@ services:
       - POSTGRES_PASSWORD=onlinejudge
 
   oj-forum:
-    image: fbraz3/lnmp:7.2
-    # image: registry.cn-hangzhou.aliyuncs.com/wenjian_oj/oj-forum
+    image: php:7.4-fpm
     container_name: oj-forum
     restart: always
     volumes:
-      - $PWD/data/forum:/app/public
-      # - $PWD/data/model:/app/public/api/live2d/model
-      # - $PWD/data/mysql:/var/lib/mysql
+      - $PWD/data/forum:/forum:ro
     
   judge-server:
     # image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
@@ -76,6 +73,7 @@ services:
       - oj-forum
     volumes:
       - $PWD/data/backend:/data
+      - $PWD/data/forum:/forum:ro
     environment:
       - POSTGRES_DB=onlinejudge
       - POSTGRES_USER=onlinejudge
