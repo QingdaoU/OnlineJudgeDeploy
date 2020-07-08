@@ -11,7 +11,7 @@
 
 2. 安装 Docker 
 
-    国内用户使用脚本一键安装: `sudo curl -sSL https://get.daocloud.io/docker | sh`  
+    国内用户使用脚本一键安装: `sudo curl -sSL https://get.daocloud.io/docker | sh /dev/stdin --mirror Aliyun`  
     国外用户使用脚本一键安装: `sudo curl -sSL get.docker.com | sh`
     
     详细步骤参照： [https://docs.docker.com/install/](https://docs.docker.com/install/)
