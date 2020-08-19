@@ -1,3 +1,5 @@
+简体中文 | [English](https://github.com/QingdaoU/OnlineJudgeDeploy/blob/2.0/README.en.md)
+
 ## 环境准备
 
 ### Linux 环境
@@ -5,7 +7,8 @@
 1. 安装必要的依赖
 
     ```bash
-    sudo apt-get update && sudo apt-get install -y vim python-pip curl git
+    sudo apt-get update && sudo apt-get install -y vim python3-pip curl git
+    pip3 install --upgrade pip
     pip install docker-compose
     ```
 
