@@ -1,0 +1,21 @@
+am fairly new to node.js and i am wondering how to (or even if) i can read and write to a JSON file. I am trying to create an accessible punishment history. Ideally i would want to be able to create something along the lines of this:
+
+{
+"punishments": {
+    "users": {
+      "<example user who has a punishment history>": {
+        "punishment-1567346": {
+          "punishment-id": "1567346",
+          "punishment-type": "mute",
+          "punishment-reason": "<reason>"
+        },
+        "punishment-1567347": {
+          "punishment-id": "1567347",
+          "punishment-type": "ban",
+          "punishment-reason": "<reason>"
+        }
+      }
+    }
+  }
+}
+Then i would have a way to access the formatted punishment history. I genuinely have no clue where to start.
