@@ -1,0 +1,14 @@
+{"{\"title\":\"First Title\"}"=>nil, "format"=>:json, 
+"controller"=>"api/v1/products", "action"=>"create", "user_id"=>"2"}
+Whereas, they need to come through like this:
+
+  {"title"=>"First Title", "format"=>:json, 
+  "controller"=>"api/v1/products", "action"=>"create", "user_id"=>"2"}
+Currently, on the iOS side, I am sending through the params like so:
+
+let params = ["title": "First Title"]
+How can I send the params from the iOS side so that they come through to the rails side in the correct format?
+
+Just for a little more info, this is the response I'm getting in my Terminal when I do the post request:
+
+enter image description here
