@@ -1,0 +1,148 @@
+Git is an open-source version control system and a command-line tool, it is used by programmers, developers, and designers to store projects and keep track of changes to their files. github.com is the website where developers can store their projects. Some basic git command is mentioned below:
+
+git clone /path/to/repository
+
+This command is used to clone the application in local repository. Create a working copy of a
+local repository.
+
+git init
+
+Create a new local repository.
+
+git add
+
+This command used to Add all the files to staging.
+
+git commit -m “Commit message”
+
+Commit changes to head (but not yet to the remote repository).
+
+git config –global user.name “jyoti” / git config –global user.email “jyotisingh@carmatec.in”
+
+Configure the user name and email address to be used with your commits.
+
+git remote -v
+
+List all the currently configured remote repositories
+
+git push origin
+
+Send the committed changes to the branch of your remote repository.
+
+git status
+
+List the files you have changed and those you still need to add or commit.
+
+git remote add origin
+
+If you have not connected to your local repository to a remote server, add the server to be able to push the code.
+
+git remote -v
+
+List all currently configured remote repositories.
+
+git checkout
+
+Switch from one branch to another.
+
+git checkout -b
+
+Create a new branch and switch to it.
+
+git branch
+
+List all the branches in your repository, and also tell you on which branch you are currently in.
+
+git branch -d
+
+Delete the feature branch.
+
+git push –all origin
+
+Push all branches to your remote repository.
+
+git pull
+
+Fetch and merge changes on the remote server to your working directory.
+
+git merge
+
+To merge a different branch into your active branch.
+
+git diff
+
+Preview changes in all the files whatever you have done.
+
+git diff –base
+
+Preview changes for a specific file done by you.
+
+git add
+
+After you have manually resolved any conflicts, you can mark the changed file then pushed.
+
+git log
+
+Display all the commits with commitId that is pushed to the remote server, and CommitId will be unique for every commit.
+
+git checkout —
+
+With this command, we can undo local changes for that specific file.
+
+git stash
+
+Suppose you want to switch to another branch but you don’t want to commit what you have been working on yet, then you can stash the changes using above command.
+
+git stash apply
+
+You can reapply the changes to any branch that you have stashed by using the above command.
+
+git stash clear
+
+You can clear the stash using the above command.
+
+git diff > patch_name.patch
+
+This command used to create a patch with diff output (all the changes that you have done for all the files)
+
+git diff patch_name.patch
+
+Create a patch for a specific file.
+
+git apply patch_name.patch
+
+This command used to apply the patch file changes in your current branch.
+
+git cherry-pick
+
+Cherry picking is used to choose a commit from one branch and apply it onto another.
+
+git reset –soft HEAD~1
+
+Undo the last commit.
+
+git reset –soft
+
+Undo any previous commit.
+
+git clean
+
+Remove untracked files from the working branch.
+
+git clean -f -d
+
+This command used to remove directories, untracked files from the working branch.
+
+git reflog
+
+It Manage reflog information means it keep record when the tips of branches and other references were updated in the local repository.
+
+Search for:
+Search …
+Recent Posts
+Data Scraping in Rails by Processing CSV
+UI/UX Design Practices
+Designing & Architecting Rails Apps
+How to revert commit from GitHub
+Make Voice calls through Ruby on Rails Web applications
+Categories
