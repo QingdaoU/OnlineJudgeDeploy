@@ -54,7 +54,7 @@ Windows 下的安装仅供体验，勿在生产环境使用。如有必要，请
 
 通过浏览器访问服务器的 HTTP 80 端口或者 HTTPS 443 端口，就可以开始使用了。后台管理路径为`/admin`, 安装过程中自动添加的超级管理员用户名为 `root`，密码为 `rootroot`， **请务必及时修改密码**。
 
-不要忘记阅读文档 http://docs.onlinejudge.me/
+不要忘记阅读文档 http://opensource.qduoj.com/
 
 ## 定制
 
@@ -64,4 +64,4 @@ Windows 下的安装仅供体验，勿在生产环境使用。如有必要，请
 
 ## 遇到了问题？
 
-请参照: [http://docs.onlinejudge.me/](http://docs.onlinejudge.me/#/onlinejudge/faq) ，如有其他问题请入群讨论或提issue。
+请参照: [http://opensource.qduoj.com/](http://opensource.qduoj.com/#/onlinejudge/faq) ，如有其他问题请入群讨论或提issue。
