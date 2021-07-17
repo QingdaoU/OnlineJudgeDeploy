@@ -39,7 +39,7 @@ services:
       - ./data/judge_server/run:/judger
     environment:
       - SERVICE_URL=http://judge-server:8080
-      - BACKEND_URL=http://oj-backend:8000/api/judge_server_heartbeat/
+      - BACKEND_URL=http://oj-backend:8000/api/judge_server_heartbeat/ # Note: Use port 80 if the judge server doesn't run in the same docker network as oj-backend
       - TOKEN=CHANGE_THIS
       # - judger_debug=1
   
