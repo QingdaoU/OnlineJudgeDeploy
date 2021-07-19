@@ -1,0 +1,5 @@
+MRIQC is a BIDS App that leverages BIDS compliant datasets in order to perform quality assessments (QA) on T1w, T2w, and/or functional MRI acqusitions. These assessments come in the form of handy HTML reports that can be used to examine the quality of the collected data, and determine whether the data quality is sufficient for subsequent pre-processing and analysis. For a more in-depth (and better) overview of MRIQC, check out their homepage here.
+MRIQC will take a little awhile to run to completion (approximately 40 min), so you can leave the terminal window aside until then. It’s worth noting that the example MRIQC command is rather bare-bones; if you’re interested in applying additional or different options to your MRIQC command, refer to them here. The time it takes MRIQC to finish is contingent on the size of your data, the amount of processing power you’re feeding MRIQC, and the feature options selected, so running MRIQC on a different dataset with different options may result in a longer (or shorter) completition time.
+
+Assessing MRIQC QA Reports
+To access the reports, go to the output directory by typing the following into the terminal:
