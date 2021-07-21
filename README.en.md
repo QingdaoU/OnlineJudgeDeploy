@@ -39,4 +39,4 @@ Wait for the command execution to complete, and then run `docker ps -a`. When yo
 
 Access the server's HTTP 80 port or HTTPS 443 port through a browser, and you can start using it. The background management path is `/admin`, the super administrator user name automatically added during the installation process is `root`, and the password is `rootroot`. **If you log in successfully, please change your account password immediately.**.
 
-Don't forget to read the documentation: http://docs.onlinejudge.me/
+Don't forget to read the documentation: http://opensource.qduoj.com/
