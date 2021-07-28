@@ -1,5 +1,7 @@
 简体中文 | [English](https://github.com/QingdaoU/OnlineJudgeDeploy/blob/2.0/README.en.md)
 
+**⚠ 警告：在阅读本文档前，您需要了解 Linux 的基础操作及 Docker 相关知识。**
+
 ## 环境准备
 
 ### Linux 环境
