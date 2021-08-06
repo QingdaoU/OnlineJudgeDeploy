@@ -25,6 +25,8 @@ services:
     restart: always
     volumes:
       - $PWD/data/forum:/forum
+    environment:
+      # - STATIC_CDN_HOST=http://cdn.oj.com
     
   judge-server:
     # image: registry.cn-hangzhou.aliyuncs.com/onlinejudge/judge_server
@@ -80,7 +82,7 @@ services:
       - POSTGRES_PASSWORD=onlinejudge
       - JUDGE_SERVER_TOKEN=CHANGE_THIS
       # - FORCE_HTTPS=1
-      # - STATIC_CDN_HOST=cdn.oj.com
+      # - STATIC_CDN_HOST=http://cdn.oj.com
     ports:
       - "0.0.0.0:80:8000"
       - "0.0.0.0:443:1443"

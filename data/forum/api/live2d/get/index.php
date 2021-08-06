@@ -9,6 +9,13 @@ $modelList = new modelList();
 $modelTextures = new modelTextures();
 $jsonCompatible = new jsonCompatible();
 
+$STATIC_CDN_HOST = getenv('STATIC_CDN_HOST');
+if ($STATIC_CDN_HOST) {
+    $URL = $STATIC_CDN_HOST.'/api/live2d';
+} else {
+    $URL = '..';
+}
+
 $id = explode('-', $id);
 $modelId = (int)$id[0];
 $modelTexturesId = isset($id[1]) ? (int)$id[1] : 0;
@@ -27,25 +34,29 @@ if (is_array($modelName)) {
 }
 
 $textures = json_encode($json['textures']);
-$textures = str_replace('texture', '../model/'.$modelName.'/texture', $textures);
+$textures = str_replace('texture', $URL.'/model/'.$modelName.'/texture', $textures);
+$textures = str_replace('moc', $URL.'/model/'.$modelName.'/moc', $textures);
 $textures = json_decode($textures, 1);
 $json['textures'] = $textures;
 
-$json['model'] = '../model/'.$modelName.'/'.$json['model'];
-if (isset($json['pose'])) $json['pose'] = '../model/'.$modelName.'/'.$json['pose'];
-if (isset($json['physics'])) $json['physics'] = '../model/'.$modelName.'/'.$json['physics'];
+$json['model'] = $URL.'/model/'.$modelName.'/'.$json['model'];
+if (isset($json['pose'])) $json['pose'] = $URL.'/model/'.$modelName.'/'.$json['pose'];
+if (isset($json['physics'])) $json['physics'] = $URL.'/model/'.$modelName.'/'.$json['physics'];
 
 if (isset($json['motions'])) {
     $motions = json_encode($json['motions']);
-    $motions = str_replace('sounds', '../model/'.$modelName.'/sounds', $motions);
-    $motions = str_replace('motions', '../model/'.$modelName.'/motions', $motions);
+    $motions = str_replace('sounds', $URL.'/model/'.$modelName.'/sounds', $motions);
+    $motions = str_replace('snd\/', $URL.'/model/'.$modelName.'/snd/', $motions);
+    $motions = str_replace('motions', $URL.'/model/'.$modelName.'/motions', $motions);
+    $motions = str_replace('mtn\/', $URL.'/model/'.$modelName.'/mtn/', $motions);
     $motions = json_decode($motions, 1);
     $json['motions'] = $motions;
 }
 
 if (isset($json['expressions'])) {
     $expressions = json_encode($json['expressions']);
-    $expressions = str_replace('expressions', '../model/'.$modelName.'/expressions', $expressions);
+    $expressions = str_replace('expressions', $URL.'/model/'.$modelName.'/expressions', $expressions);
+    $expressions = str_replace('exp\/', $URL.'/model/'.$modelName.'/exp/', $expressions);
     $expressions = json_decode($expressions, 1);
     $json['expressions'] = $expressions;
 }
