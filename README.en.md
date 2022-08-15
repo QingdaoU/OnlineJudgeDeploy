@@ -10,7 +10,7 @@
     sudo apt-get update
     sudo apt-get install -y vim python3-pip curl git
     pip3 install --upgrade pip
-    pip install docker-compose
+    pip3 install docker-compose
     ```
 
 2. Install Docker
@@ -30,7 +30,7 @@
 2. Start service
 
     ```bash
-    docker-compose up -d
+    sudo docker-compose up -d
     ```
 
 According to the network speed, the setup can be completed automatically in about 5 to 30 minutes without manual intervention.
