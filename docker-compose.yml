@@ -47,7 +47,7 @@ services:
     depends_on:
       - oj-redis
       - oj-postgres
-      - judge-server
+      - oj-judge
     volumes:
       - ./data/backend:/data
     environment:
