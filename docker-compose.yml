@@ -6,7 +6,7 @@ services:
     restart: always
     volumes:
       - ./data/redis:/data
-  
+
   oj-postgres:
     image: postgres:10-alpine
     restart: always
@@ -18,7 +18,7 @@ services:
       - POSTGRES_PASSWORD=onlinejudge
 
   oj-judge:
-    image: ghcr.io/qingdaou/oj-judge:1.6.0
+    image: registry.cn-hongkong.aliyuncs.com/oj-image/judge:1.6.0
     restart: always
     read_only: true
     cap_drop:
@@ -39,10 +39,9 @@ services:
       - BACKEND_URL=http://oj-backend:8000/api/judge_server_heartbeat/
       - TOKEN=CHANGE_THIS
       # - judger_debug=1
-  
+
   oj-backend:
-    image: ghcr.io/qingdaou/oj-backend:1.6.0
-    container_name: oj-backend
+    image: registry.cn-hongkong.aliyuncs.com/oj-image/backend:1.6.0
     restart: always
     depends_on:
       - oj-redis
