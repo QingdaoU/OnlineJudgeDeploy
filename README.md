@@ -9,7 +9,7 @@
     ```bash
     sudo apt-get update && sudo apt-get install -y vim python3-pip curl git
     pip3 install --upgrade pip
-    pip install docker-compose
+    pip3 install docker-compose
     ```
 
 2. 安装 Docker 
@@ -43,7 +43,7 @@ Windows 下的安装仅供体验，勿在生产环境使用。如有必要，请
 2. 启动服务
 
     ```bash
-    docker-compose up -d
+    sudo docker-compose up -d
     ```
 
 根据网速情况，大约5到30分钟就可以自动搭建完成，全程无需人工干预。
