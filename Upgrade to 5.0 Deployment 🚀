@@ -1,0 +1,58 @@
+It’s been too long since I posted anything on Medium, I feel like I’ve been slacking. Lately I’ve been hitting the grind trying to get my foot in the door somewhere, while at the same time sticking to my routine of constantly learning something new about cloud engineering every day. It’s always fun to stay on the bleeding edge for me.
+The new hotness that everyone wants these days is Kubernetes. It’s a bit of a cargo cult, and not everyone needs it. However it’s really awesome tech and it’s fun to play with.
+For those that haven’t heard, Kubernetes is an orchestration tool for containers. Without getting too technical, Kubernetes is like a ship captain for the containers in your application. Which would make sense, because the etymology of the word “Kubernetes” is Greek for helmsman/pilot.
+
+Kubernetes (K8s) is an open-source system for automating deployment, scaling, and management of containerized applications.
+So naturally, Kubernetes is something that I’ve been putting a lot of research and study into. I’m currently preparing to take my CKA (Certified Kubernetes Administrator) exam and have really just been having a blast with it. The only problem has been that it can sometimes be tedious to provision the resources and install the packages I need to play around with some of the infrastructure that I want to.
+I’ve been looking around for a turnkey solution to spin up some resources on EC2 such as:
+Graylog
+Rancher 5.0
+Helm
+I ended up settling with a tool calledconjure-up, which is made by Canonical Corporation, the creators of Ubuntu and it is also OSS. Conjure-up is marketed as a tool for provisioning large software stacks as a spell, which is a “model of the stack”.
+
+This tool was perfect for my use case. It would allow me to focus less on installing packages and provisioning tons of EC2 instances, and more on getting my hands dirty with the cluster itself.
+Installing `conjure-up`
+To get started with conjure-up, you’ll want to make sure you have snapd installed, because conjure-up is distributed via snap.
+So first, run:
+sudo apt install snapd
+After you’ve made sure you have snap installed. Go ahead and run:
+sudo snap install conjure-up --classic
+NOTE:
+If you get an $PATH variable error, make sure you have /snap/bin added to $PATH. This would be done by running:
+export PATH=$:/snap/bin
+Or by adding it directly in .profile in the home directory.
+Using `conjure-up`
+Now comes the fun part. So, to start using conjure-up, all you have to do is run:
+conjure-up
+That will bring up a GUI that looks like this:
+
+From here, you will choose which “spell” you want to deploy. For the sake of this tutorial, I’m going to choose Charmed Distribution of Kubernetes by using the arrow keys and hitting Space.
+This brings us to the next screen:
+
+Which brings us to one of my favorite features of conjure-up. This section is what you will select modular add-ons to supplement your deployment. Select your add-on with SPACE and move on to the next section by pressing ENTER.
+NOTE:
+If you choose Kubernetes Core this will not appear as a section.
+
+In this section, you will select your cloud provider from a list of public clouds as well as MaaS, Openstack, and VMware. Again, for the sake of this tutorial I will choose AWS.
+Hit ENTER on your selected provider and move to the next screen:
+
+This section is where you will enter your security credentials, so pretty self explanatory. Provide those and press ENTER to be taken to the next task:
+
+Here is where you will select your region, which if you are using GCP or something other than AWS, this will look different. Pick your region and move on to the next task.
+
+this section is where you will set up your controller or deploy a new self-hosted one. Choose an option with ENTER and move on to the next task.
+
+This section is where you will choose between a calico or flannel network “spell”. Choose your preferred and move on to the next task.
+
+This section is where you provide sudo credentials.
+
+This is the last step before deployment, where you can configure certain parameters.
+
+
+And BOOM. You’re on your way to some bulletproof infrastructure in the amount of time it would have taken to watch an episode of Love, Death, and Robots.
+I hope everyone enjoyed this little tutorial I made. conjure-up is a handy little tool and it has a lot of capabilities. I’d love to hear what the public has to say and what your experience has been with it, whether in production or in your free time.
+Be sure to hit that follow button so you can stay up to date with my future posts.
+Find me on GitHub: www.github.com/jdbohrman
+Find me on LinkedIn: www.linkedin.com/in/jdbohrman
+Also, I have an AMAZING Discord community you should check out. We do occasional AWS credit giveaways and are just getting off the ground. Come join the fun!
+www.invite.gg/latenightdevops
